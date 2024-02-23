@@ -1,4 +1,18 @@
 <?php
+	$cpf = $_REQUEST['documento'];
+	$obj = ["cpf" => $cpf];
+	$txt = json_encode ($obj);
+
+	$curl = curl_init("http://localhost:8081/servico.php");
+	curl_setopt($curl, CURLOPT_POSTFIELDS, $txt);
+	curl_setopt($curl, CURLOPT_HTTPHEADER, ['application/json']);
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	$txt = curl_exec($curl);
+	$obj = json_decode ($txt, true);
+	if ($obj['status'] == 'procurado'){
+		print 'Procurado!! Chame a policia!!';
+	}
+
 	$conexao = new pdo('sqlite:bancodedados.data');
 	$insert = "insert into paciente values (null, '".$_REQUEST['documento']."', '".$_REQUEST['nome']."', '".$_REQUEST['sexo']."', '".$_REQUEST['nascimento']."', '".$_REQUEST['email']."', '".$_REQUEST['fone']."', '".$_REQUEST['moradia']."', '', datetime('now') );";
 	$resultado1 = $conexao->exec($insert);
