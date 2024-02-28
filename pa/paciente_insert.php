@@ -13,7 +13,20 @@
 		print 'Procurado!! Chame a policia!!';
 	}
 
+	$obj = ["cpf" => $cpf];
+	$txt = json_encode ($obj);
+	$curl = curl_init("http://localhost:8081/servico.php");
+	curl_setopt($curl, CURLOPT_POSTFIELDS, $txt);
+	curl_setopt($curl, CURLOPT_HTTPHEADER, ['application/json']);
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	$txt = curl_exec($curl);
+	$obj = json_decode ($txt, true);
+	if ($obj['status'] == false){
+		print 'cpf invalido';
+		print '<script>setTimeout(function(){window.history.back(-1);}, 2000);</script>';
+	} else{
 	$conexao = new pdo('sqlite:bancodedados.data');
+	//$insert = "delete from paciente";
 	$insert = "insert into paciente values (null, '".$_REQUEST['documento']."', '".$_REQUEST['nome']."', '".$_REQUEST['sexo']."', '".$_REQUEST['nascimento']."', '".$_REQUEST['email']."', '".$_REQUEST['fone']."', '".$_REQUEST['moradia']."', '', datetime('now') );";
 	$resultado1 = $conexao->exec($insert);
 	$pid = "select max(id) pid from paciente;";
@@ -28,4 +41,5 @@
 	} else {
 		print 'Erro na inserção.';
 	}
+	}	
 ?>
