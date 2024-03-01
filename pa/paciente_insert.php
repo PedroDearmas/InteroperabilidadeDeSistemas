@@ -3,7 +3,7 @@
 	$obj = ["cpf" => $cpf];
 	$txt = json_encode ($obj);
 
-	$curl = curl_init("http://localhost:8081/servico.php");
+	$curl = curl_init("http://localhost:8082/servico.php");
 	curl_setopt($curl, CURLOPT_POSTFIELDS, $txt);
 	curl_setopt($curl, CURLOPT_HTTPHEADER, ['application/json']);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -15,7 +15,7 @@
 
 	$obj = ["cpf" => $cpf];
 	$txt = json_encode ($obj);
-	$curl = curl_init("http://localhost:8081/servico.php");
+	$curl = curl_init("http://localhost:8083/servico.php");
 	curl_setopt($curl, CURLOPT_POSTFIELDS, $txt);
 	curl_setopt($curl, CURLOPT_HTTPHEADER, ['application/json']);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -23,7 +23,8 @@
 	$obj = json_decode ($txt, true);
 	if ($obj['status'] == false){
 		print 'cpf invalido';
-		print '<script>setTimeout(function(){window.history.back(-1);}, 2000);</script>';
+		print '<style>body{background-color:red}</style>';
+		print '<script>setTimeout(function(){window.history.back(-1);}, 1500);</script>';
 	} else{
 	$conexao = new pdo('sqlite:bancodedados.data');
 	//$insert = "delete from paciente";
@@ -37,6 +38,7 @@
 	unset($conexao);
 	if ( $resultado1 > 0 and $resultado2 > 0 ) {	
 		print 'Inserido com sucesso.';
+		print '<style>body{background-color:green}</style>';
 		print '<script>window.setTimeout(function(){window.location=\'/paciente_cadastro.php\';}, 2000);</script>';
 	} else {
 		print 'Erro na inserção.';
