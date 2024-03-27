@@ -3,6 +3,16 @@
 	//Espanha = 8081
 	//Osorio = 8082
 	//Tupy = 8083
+	$conexao = new pdo ('sqlite:banco.sqlite');
+
+	$sql = "SELECT cpf from cliente WHERE id = '".$_REQUEST['cliente']."'";
+	$cpf = $conexao->query($sql)->fetchAll(2)[0]['cpf']; 
+
+	$sql = "SELECT anvisa from produto WHERE id = '".$_REQUEST['produto']."'";
+	$anvisa = $conexao->query($sql)->fetchAll(2)[0]['anvisa']; 
+
+	$obj = ['cpf' => $cpf, 'anvisa' => $anvisa];
+	$txt = json_encode($obj);
 
 	$teste = false; 
 
@@ -22,7 +32,7 @@
 	curl_setopt( $curl, CURLOPT_RETURNTRANSFER, true );
 	$txt = curl_exec( $curl );
 	$obj = json_decode( $txt, true );
-	if ( $obj['status'] == 'true' ) {
+	if ( $obj['status'] == true ) {
 		$teste = true;
 	}
 	$sql = " insert into venda values (null, '" . $_REQUEST['produto'] . "', '" . $_REQUEST['cliente'] . "', datetime('now'), ( select valor from produto where id = '" . $_REQUEST['produto'] . "') ); ";

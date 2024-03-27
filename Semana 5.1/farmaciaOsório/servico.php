@@ -14,12 +14,12 @@
         where p.anvisa = '$anvisa'
         and c.cpf = '$cpf';";
         
-    $conexao = new pdo ('sqlite:db');
+    $conexao = new pdo ('sqlite:banco.sqlite');
     $resultado = $conexao->query($consulta)->fetchAll();
     if ( count($resultado) > 0 ) {
-        $obj = [ 'status' => 'true' ];
+        $obj = [ 'status' => true ];
     } else {
-        $obj = [ 'status' => 'false' ];
+        $obj = [ 'status' => false ];
     }
     $txt = json_encode( $obj );
     print $txt;
