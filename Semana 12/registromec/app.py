@@ -43,6 +43,8 @@ def remover() :
 	conexao.close()
 	return redirect("/buscar")
 
+
+
 @app.route('/validaDiploma', methods=['POST'])
 def validaDiploma():
 
@@ -60,7 +62,26 @@ def validaDiploma():
 		obj = {"status" : False}
 	txt = json.dumps(obj)
 	return txt 
+
+@app.route('/validaSuperior', methods=['POST'])
+def validaSuperior():
+
+	txt = request.get_data()
+	obj = json.loads(txt)
+	documento = obj["documento"]
+
+	select = "select * from registro where cpf= '"+documento+"' and nivel ='ES';"
+	conexao = sqlite3.connect('banco.data')
+	resultado = conexao.execute(select).fetchall()
+	conexao.close()
+	if (len(resultado) > 0):
+		obj = {"status" : True}
+	else: 
+		obj = {"status" : False}
+	txt = json.dumps(obj)
+	return txt 
  
+
 @app.route('/', methods=['GET', 'POST'])
 def inicio():
 	return redirect('/buscar')

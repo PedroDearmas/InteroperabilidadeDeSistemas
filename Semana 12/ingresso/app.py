@@ -7,26 +7,15 @@ app = Flask(__name__, template_folder='.')
 @app.route('/inserir', methods=['GET', 'POST'])
 def inserir():
 	if request.method == 'POST':
-	#	cpf   = request.values.get('cpf')
-	#	obj = {"documento" : cpf}
-	#	txt = json.dumps(obj)
-	#	resposta = requests.post(url="http://localhost:5002/valida", data=txt)
-	#	txt = resposta.content
-	#	obj = json.loads(txt)
-	#	if obj['status'] == False:
-	#		return 'CPF invalido.'	
-	#	nome  = request.values.get('nome')
-	#	curso = request.values.get('curso')
-	#	chave = ''
-	#	insert = "insert into aluno values (null, '" + cpf + "', '" + nome + "', '" + curso + "', '" + chave + "', datetime('now')); "
-	#	conexao = sqlite3.connect('banco.data')
-	#	conexao.execute(insert)
-	#	conexao.commit()
-	#	conexao.close()
-	#	return redirect('/listar')
-	#elif request.method == 'GET':
-	#	return render_template('cadastro.html')
-
+		cpf   = request.values.get('cpf')
+		obj = {"documento" : cpf}
+		txt = json.dumps(obj)
+		resposta = requests.post(url="http://localhost:5002/valida", data=txt)
+		txt = resposta.content
+		obj = json.loads(txt)
+		if obj['status'] == False:
+			return 'CPF invalido.'	
+	
 		cpf   = request.values.get('cpf')
 		obj = {"documento" : cpf}
 		txt = json.dumps(obj)
@@ -35,6 +24,16 @@ def inserir():
 		obj = json.loads(txt)
 		if obj['status'] == False:
 			return 'Não concluiu o Ensino Medio.'	
+
+		cpf   = request.values.get('cpf')
+		obj = {"documento" : cpf}
+		txt = json.dumps(obj)
+		resposta = requests.post(url="http://localhost:5003/validaSuperior", data=txt)
+		txt = resposta.content
+		obj = json.loads(txt)
+		if obj['status'] == True:
+			return 'Concluiu o Ensino Superior. <script>setTimeout(history.back(), 5000);</script>' 
+
 		nome  = request.values.get('nome')
 		curso = request.values.get('curso')
 		chave = ''
