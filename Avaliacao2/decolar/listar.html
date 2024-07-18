@@ -1,0 +1,59 @@
+	{% extends "layout.html" %}
+	{% block conteudo %}
+	<h2>Escolha seu Voo</h2>
+	<form method="post" action="/listar">
+		<p><input type="text" name="origem" placeholder="Digite a oriem."/></p>
+		<p><input type="text" name="destino" placeholder="Digite o destino." /></p>
+		<p><input type="date" name="data" /></p>
+   		<p><button type="submit" formmethod="post">Pesquisar</button></p>
+	</form>
+
+	<h3>Lista de Voos da Gol</h3>
+	<table border="1">
+		<tr>
+			<th> ID        </th>
+			<th> Voo      </th>
+			<th> Avião       </th>
+			<th> Origem      </th>
+			<th> Destino       </th>
+			<th> Data e Hora    </th>
+			<th> Comprara   </th>
+		</tr>
+		{% for tupla in objgol %}
+		<tr>
+			<td> {{tupla['id']}} </td>
+			<td> {{tupla['voo']}} </td>
+			<td> {{tupla['aviao']}} </td>
+			<td> {{tupla['origem']}} </td>
+			<td> {{tupla['destino']}} </td>
+			<td> {{tupla['datahora']}} </td>
+			<td> <a href="/comprar?id={{tupla['id']}}&voo={{tupla['voo']}}">Comprar</a> </td>
+		<tr>
+		{% endfor %}
+	</table>
+
+	<h3>Lista de Voos da Latam</h3>
+	<table border="1">
+		<tr>
+			<th> ID        </th>
+			<th> Voo      </th>
+			<th> Avião       </th>
+			<th> Origem      </th>
+			<th> Destino       </th>
+			<th> Data e Hora    </th>
+			<th> Comprara   </th>
+		</tr>
+		{% for tupla in objlatam %}
+		<tr>
+			<td> {{tupla['id']}} </td>
+			<td> {{tupla['voo']}} </td>
+			<td> {{tupla['aviao']}} </td>
+			<td> {{tupla['origem']}} </td>
+			<td> {{tupla['destino']}} </td>
+			<td> {{tupla['datahora']}} </td>
+			<td> <a href="/comprar?id={{tupla['id']}}&voo={{tupla['voo']}}">Comprar</a> </td>
+		<tr>
+	{% endfor %}
+	</table>
+
+		{% endblock %}

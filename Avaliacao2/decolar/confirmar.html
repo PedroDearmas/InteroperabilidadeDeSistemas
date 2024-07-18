@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block conteudo %}
+    {% if result['status']=='true' %}
+        <h2>Passagem comprada com sucesso!</h2>
+        <form method="get" action="/listar">
+            <p><button type="submit">Pesquisar mais voos</button></p>
+        </form>
+    {% else %}
+        <h2>Ocorreu um erro.</h2>
+    {% endif %}
+{% endblock %}
